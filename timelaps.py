@@ -15,4 +15,4 @@ def picture(x):
         sleep(0.10)
         
     picam2.close() 
-    print("Donees")
+    print("Done")
