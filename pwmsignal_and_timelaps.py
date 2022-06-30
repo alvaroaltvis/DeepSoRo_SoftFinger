@@ -18,7 +18,7 @@ while(stopit!= True):
         stopit = True
         break
     name = input("Enter the name of the pictures: ")
-    pwm.ChangeDutyCycle(int(dutycycle))1
+    pwm.ChangeDutyCycle(int(dutycycle))
     
     picture(name)
    
