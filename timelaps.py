@@ -11,7 +11,7 @@ def picture(x):
     sleep(2)
     
     for picture in range(10):
-        metadata = picam2.capture_file("/home/rasberrypi/Desktop/" + x + "{0:04d}.jpg".format(picture))
+        metadata = picam2.capture_file("/home/raspberrypi/Desktop/" + x + "{0:04d}.jpg".format(picture))
         sleep(0.10)
         
     picam2.close() 
