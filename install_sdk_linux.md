@@ -2,7 +2,8 @@
 
 ### First make sure that your linux is AMD64 
 
-``` dpkg --print-architecture 
+``` 
+dpkg --print-architecture 
 ```
 
 ### Then download the Microsoft SDK package 
