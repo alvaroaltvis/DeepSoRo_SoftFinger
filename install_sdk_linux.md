@@ -55,5 +55,6 @@ k4aviewer
 ```
 NOTE: If its not working disconnect and connect camera from the computer
 
+#### Finally add the path to k4a 
 
 
