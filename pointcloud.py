@@ -49,7 +49,7 @@ def main():
     # capture data
     points, colors = camera.capture()
 
-    # # Chek the amount of Green color in the image
+    # Chek the amount of Green color in the image
     count = 0
     for color in colors[:,1]:
         if color >= 200:
@@ -58,24 +58,23 @@ def main():
             continue
     print("Amount of 255 in the array: " + str(count))
 
-    # Store the index number of the green color 
+    #Store the index number of the green color 
     index_slice = []
-    index = -1
+    index = -2
     for color in colors[:,1]:
         index += 1
         if color >= 200:
             index_slice.append(index)
-        else:
-            continue 
+    print("Lets see")
     #print(index_slice)
     
-    # Now we iterate over the color and the points array to get rid of those points 
-    # for index in index_slice:
-    #     colors = np.delete(colors, index)
-    #     points = np.delete(points, index)
-    #     return colors, points 
+    #Now we iterate over the color and the points array to get rid of those points 
+    for index in index_slice:
+        colors = np.delete(colors, index, 0)
+        points = np.delete(points, index, 0)
+    print("hello")
 
-    print(np.shape(points[:,1]))
+    print(f"It has {np.shape(points[:,1])} rows left")
     print(np.shape(colors[:,1]))
 
 
@@ -95,3 +94,4 @@ def main():
 if __name__ == "__main__":
     os.chdir(sys.path[0])
     main()
+
