@@ -2,18 +2,18 @@ import numpy as np
 from matplotlib import pyplot as plt
 from mpl_toolkits import mplot3d  # noqa: F401
 import time, os, sys
-
 import pyk4a
 from pyk4a import Config, PyK4A
 
-class CAPTURE_DATA:
+np.set_printoptions(threshold=np.inf)
+class CAPTURE_DATA: 
 
     def __init__(self) -> None:
         self.k4a = PyK4A(
         Config(
             color_resolution=pyk4a.ColorResolution.RES_720P,
             camera_fps=pyk4a.FPS.FPS_5,
-            depth_mode=pyk4a.DepthMode.WFOV_2X2BINNED,
+            depth_mode=pyk4a.DepthMode.NFOV_2X2BINNED,
             synchronized_images_only=True,
         ))
 
@@ -30,16 +30,16 @@ class CAPTURE_DATA:
             capture = self.k4a.get_capture()
             if np.any(capture.depth) and np.any(capture.color):
                 break
-        # while True:
-        #     capture = self.k4a.get_capture()
-        #     if np.any(capture.depth) and np.any(capture.color):
-        #         break
         points = capture.depth_point_cloud.reshape((-1, 3))
         colors = capture.transformed_color[..., (2, 1, 0)].reshape((-1, 3))
-
-        return points, colors
+        print(np.shape(points[:,1]))
+        #print(colors[:,1])
+        print(colors.sum())
+        print(np.max(colors[:,1]))
+        print(np.min(colors[:,1]))
+        print(np.shape(colors[:,1]))
         
-
+        return points, colors
 
 def main():
 
@@ -48,6 +48,36 @@ def main():
 
     # capture data
     points, colors = camera.capture()
+
+    # # Chek the amount of Green color in the image
+    count = 0
+    for color in colors[:,1]:
+        if color >= 200:
+            count += 1
+        else: 
+            continue
+    print("Amount of 255 in the array: " + str(count))
+
+    # Store the index number of the green color 
+    index_slice = []
+    index = -1
+    for color in colors[:,1]:
+        index += 1
+        if color >= 200:
+            index_slice.append(index)
+        else:
+            continue 
+    #print(index_slice)
+    
+    # Now we iterate over the color and the points array to get rid of those points 
+    # for index in index_slice:
+    #     colors = np.delete(colors, index)
+    #     points = np.delete(points, index)
+    #     return colors, points 
+
+    print(np.shape(points[:,1]))
+    print(np.shape(colors[:,1]))
+
 
     fig = plt.figure(figsize=(10, 10))
     ax = fig.add_subplot(111, projection='3d')
@@ -61,17 +91,7 @@ def main():
     plt.show()
     plt.savefig('1.png') 
 
-    # while True:
-    #     print('x')
-    #     # capture data
-    #     points, colors = camera.capture()
-    #     ax.scatter(points[:, 0],points[:, 1],points[:, 2],s=1, c=colors / 255)
-    #     plt.savefig('1.png')
-    #     # time.sleep(1)s
-        
-
 
 if __name__ == "__main__":
-
     os.chdir(sys.path[0])
     main()
