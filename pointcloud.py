@@ -1,3 +1,5 @@
+
+
 import numpy as np
 from matplotlib import pyplot as plt
 from mpl_toolkits import mplot3d  # noqa: F401
@@ -32,13 +34,20 @@ class CAPTURE_DATA:
                 break
         points = capture.depth_point_cloud.reshape((-1, 3))
         colors = capture.transformed_color[..., (2, 1, 0)].reshape((-1, 3))
-        print(np.shape(points[:,1]))
-        #print(colors[:,1])
-        print(colors.sum())
-        print(np.max(colors[:,1]))
-        print(np.min(colors[:,1]))
-        print(np.shape(colors[:,1]))
-        
+
+        #Iterate through each color RGB, look at parameters and get index for green 
+        new_index = []
+        index_count = -1
+        for color in colors:
+            index_count += 1
+            if (36 <= color[0]) and (color[0] >= 70) and (25 <= color[1]) and (color[1] >= 255) and (25 <= color[2]) and (color[2] >= 255):
+                new_index.append(index_count)
+
+        #Delete the green color pixel 
+        for index in new_index:
+            colors = np.delete(colors, index, 0)
+            points = np.delete(points, index, 0) 
+    
         return points, colors
 
 def main():
@@ -48,35 +57,6 @@ def main():
 
     # capture data
     points, colors = camera.capture()
-
-    # Chek the amount of Green color in the image
-    count = 0
-    for color in colors[:,1]:
-        if color >= 200:
-            count += 1
-        else: 
-            continue
-    print("Amount of 255 in the array: " + str(count))
-
-    #Store the index number of the green color 
-    index_slice = []
-    index = -2
-    for color in colors[:,1]:
-        index += 1
-        if color >= 200:
-            index_slice.append(index)
-    print("Lets see")
-    #print(index_slice)
-    
-    #Now we iterate over the color and the points array to get rid of those points 
-    for index in index_slice:
-        colors = np.delete(colors, index, 0)
-        points = np.delete(points, index, 0)
-    print("hello")
-
-    print(f"It has {np.shape(points[:,1])} rows left")
-    print(np.shape(colors[:,1]))
-
 
     fig = plt.figure(figsize=(10, 10))
     ax = fig.add_subplot(111, projection='3d')
