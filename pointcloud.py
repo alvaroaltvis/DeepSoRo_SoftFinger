@@ -1,5 +1,3 @@
-
-
 import numpy as np
 from matplotlib import pyplot as plt
 from mpl_toolkits import mplot3d  # noqa: F401
@@ -34,20 +32,20 @@ class CAPTURE_DATA:
                 break
         points = capture.depth_point_cloud.reshape((-1, 3))
         colors = capture.transformed_color[..., (2, 1, 0)].reshape((-1, 3))
-
         #Iterate through each color RGB, look at parameters and get index for green 
         new_index = []
         index_count = -1
         for color in colors:
             index_count += 1
-            if (36 <= color[0]) and (color[0] >= 70) and (25 <= color[1]) and (color[1] >= 255) and (25 <= color[2]) and (color[2] >= 255):
+            if (25 <= color[1]): #  (36 <= color[0]) and (color[0] >= 70) and (25 <= color[1]) and (color[1] >= 255) and (25 <= color[2]) and (color[2] >= 255):
                 new_index.append(index_count)
+        print(new_index)
+        rows, columns = colors.shape
+        print(rows)
 
-        #Delete the green color pixel 
-        for index in new_index:
-            colors = np.delete(colors, index, 0)
-            points = np.delete(points, index, 0) 
-    
+        # Delete the green color pixel 
+        colors = np.delete(colors, new_index, 0)
+        points = np.delete(points, new_index, 0) 
         return points, colors
 
 def main():
@@ -69,9 +67,3 @@ def main():
 
     plt.show()
     plt.savefig('1.png') 
-
-
-if __name__ == "__main__":
-    os.chdir(sys.path[0])
-    main()
-
