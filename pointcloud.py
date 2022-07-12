@@ -37,7 +37,7 @@ class CAPTURE_DATA:
         index_count = -1
         for color in colors:
             index_count += 1
-            if (25 <= color[1]): #  (36 <= color[0]) and (70 >= color[0]) and (25 <= color[1]) and (255 >= color[1]) and (25 <= color[2]) and (255 >= color[2]):
+            if (140 <= color[0]) and (255 >= color[0]) and (35 <= color[1]) and (255 >= color[1]) and (60 <= color[2]) and (180 >= color[2]): # Edit this values to get better results
                 new_index.append(index_count)
         print(new_index)
         rows, columns = colors.shape
@@ -67,3 +67,8 @@ def main():
 
     plt.show()
     plt.savefig('1.png') 
+
+
+if __name__ == "__main__":
+    os.chdir(sys.path[0])
+    main()
