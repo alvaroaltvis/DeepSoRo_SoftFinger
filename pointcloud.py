@@ -39,9 +39,9 @@ class CAPTURE_DATA:
             index_count += 1
             if (140 <= color[0]) and (255 >= color[0]) and (35 <= color[1]) and (255 >= color[1]) and (60 <= color[2]) and (180 >= color[2]): # Edit this values to get better results
                 new_index.append(index_count)
-        print(new_index)
+        #print(new_index)
         rows, columns = colors.shape
-        print(rows)
+        #print(rows)
 
         # Delete the green color pixel 
         colors = np.delete(colors, new_index, 0)
