@@ -37,7 +37,7 @@ class CAPTURE_DATA:
         index_count = -1
         for color in colors:
             index_count += 1
-            if (140 <= color[0]) and (255 >= color[0]) and (35 <= color[1]) and (255 >= color[1]) and (60 <= color[2]) and (180 >= color[2]): # Edit this values to get better results
+            if (140 <= color[0]) and (255 >= color[0]) and (35 <= color[1]) and (255 >= color[1]) and (60 <= color[2]) and (180 >= color[2]): # Edit this values to get better results color[0] R color [1] G color [2] Blue, Range 0 - 255
                 new_index.append(index_count)
         #print(new_index)
         rows, columns = colors.shape
