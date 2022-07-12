@@ -49,34 +49,31 @@ def main():
     # capture data
     points, colors = camera.capture()
 
-    # Chek the amount of Green color in the image
-    count = 0
-    for color in colors[:,1]:
-        if color >= 200:
-            count += 1
-        else: 
-            continue
-    print("Amount of 255 in the array: " + str(count))
+    # Chek the amount of Green color in the image ## This is not correct
+    # count = 0
+    # for color in colors[:,1]:
+    #     if color >= 200:
+    #         count += 1
+    #     else: 
+    #         continue
+    # print("Amount of 255 in the array: " + str(count))
 
     #Store the index number of the green color 
-    index_slice = []
-    index = -2
-    for color in colors[:,1]:
-        index += 1
-        if color >= 200:
-            index_slice.append(index)
-    print("Lets see")
+    new_index = []
+    index_count = -1
+    for color in colors:
+        index_count += 1
+        if 36 <= color[:, 0] >= 70 and 25 <= color[:, 1] >= 255 and 25 <= color[:, 2] >= 255:
+            new_index.append(index_count)
+    print(new_index)
+
+    for index in new_index:
+        colors = np.delete(colors, index, 0)
+        points = np.delete(points, index, 0)
+  
     #print(index_slice)
     
     #Now we iterate over the color and the points array to get rid of those points 
-    for index in index_slice:
-        colors = np.delete(colors, index, 0)
-        points = np.delete(points, index, 0)
-    print("hello")
-
-    print(f"It has {np.shape(points[:,1])} rows left")
-    print(np.shape(colors[:,1]))
-
 
     fig = plt.figure(figsize=(10, 10))
     ax = fig.add_subplot(111, projection='3d')
@@ -94,4 +91,3 @@ def main():
 if __name__ == "__main__":
     os.chdir(sys.path[0])
     main()
-
