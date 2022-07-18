@@ -6,18 +6,30 @@ from timelaps_new import *
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(12,GPIO.OUT)
+GPIO.setup(13,GPIO.OUT)
 
-pwm = GPIO.PWM(12,100)
+pwmo = GPIO.PWM(12,100)
+pwm = GPIO.PWM(13,100)
+
 pwm.start(0)
+pwmo.start(0)
 
-def time_air():
+def inflate():
     max_time = 1
     start_time = time.time()
     while time.time() < max_time + start_time:
         pwm.ChangeDutyCycle(int(dutycycle))
     else: 
-        pwm.ChangeDutyCycle(0)   
-
+        pwm.ChangeDutyCycle(0)
+         
+def deflate():
+    max_time = 1
+    start_time = time.time()
+    while time.time() < max_time + start_time:
+        pwmo.ChangeDutyCycle(int(dutycycle))
+    else: 
+        pwmo.ChangeDutyCycle(0)
+        
 stopit = False
 
 while(stopit!= True):
@@ -25,9 +37,10 @@ while(stopit!= True):
     if int(dutycycle) == 1:
         stopit = True
         break
-    name = input("Enter the name of the pictures: ")
-    time_air()
-    pictures(name)
+    #name = input("Enter the name of the pictures: ")
+    inflate()
+    deflate()
+    #pictures(name)
    
 GPIO.cleanup()
 print("Finish")
