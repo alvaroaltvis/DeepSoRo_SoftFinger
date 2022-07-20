@@ -65,31 +65,32 @@ def collect_data():
 															   np.array([80, 200, 500])))
 
 		# save cropped pointcloud for each capture
-		filename = path.join(pcd_folder, f'pcd{cap}.ply')
+		filename = path.join(pcd_folder, f'pcdR{cap}.ply')
 		o3d.io.write_point_cloud(filename, shape, write_ascii=False, compressed=False, print_progress=False)
 		o3d.visualization.draw_geometries([shape])
 	# close internal camera video recorder
 	vid_writer.close()
 
-# write video of captured pointclouds
+# Acces and save pointcloud 
 def create_pcd_video():
-	pcd_vid_writer = imageio.get_writer(path.join(cwd, 'pcd_vid.mp4'), fps=20)
 	for cap in range(num_captures):
 		# access pointcloud
-		filename = path.join(pcd_folder, f'pcd{cap}.ply')
+		filename = path.join(pcd_folder, f'pcdR{cap}.ply')
 		shape = o3d.io.read_point_cloud(filename)
+		points = np.array(shape.points)
+		print(points)
 		# visualize pointcloud
 		vis = o3d.visualization.Visualizer()
 		vis.create_window(width=800, height=800)
 		vis.add_geometry(shape)
 		# save image
-		pcd_f = path.join(pcd_images_folder, f'img{cap}.png')
+		pcd_f = path.join(pcd_images_folder, f'imgR{cap}.png')
 		vis.capture_screen_image(pcd_f, do_render=True)
 		vis.destroy_window()
 		# write image to video
-		pcd_vid_writer.append_data(imageio.imread(pcd_f))
+		#pcd_vid_writer.append_data(imageio.imread(pcd_f))
 	# close video writer
-	pcd_vid_writer.close()
+	#pcd_vid_writer.close()
 
 
 collect_data()
