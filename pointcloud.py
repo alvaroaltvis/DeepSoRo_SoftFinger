@@ -9,6 +9,7 @@ np.set_printoptions(threshold=np.inf)
 class CAPTURE_DATA: 
 
     def __init__(self) -> None:
+        
         self.k4a = PyK4A(
         Config(
             color_resolution=pyk4a.ColorResolution.RES_720P,
@@ -37,7 +38,7 @@ class CAPTURE_DATA:
         index_count = -1
         for color in colors:
             index_count += 1
-            if (140 <= color[0]) and (255 >= color[0]) and (35 <= color[1]) and (255 >= color[1]) and (60 <= color[2]) and (180 >= color[2]): # Edit this values to get better results color[0] R color [1] G color [2] Blue, Range 0 - 255
+            if (1 <= color[1]) and (255 >= color[1]): # Edit this values to get better results color[0] R color [1] G color [2] Blue, Range 0 - 255
                 new_index.append(index_count)
         #print(new_index)
         rows, columns = colors.shape
@@ -72,3 +73,6 @@ def main():
 if __name__ == "__main__":
     os.chdir(sys.path[0])
     main()
+
+
+# if (color[0]=124 and color[1]=252 and color[2]=0) or (color[0]=127 and color[1]=255 and color[2]=0) or (color[0]=50 and color[1]=205 and color[2]=50) or (color[0]=0 and color[1]=255 and color[2]=0) or (color[0]=34 and color[1]=139 and color[2]=34) or (color[0]=0 and color[1]=128 and color[2]=0) or (color[0]=0 and color[1]=100 and color[2]=0) or (color[0]=173 and color[1]=255 and color[2]=47) or (color[0]=154 and color[1]=205 and color[2]=50) or (color[0]=0 and color[1]=255 and color[2]=154) or (color[0]=144 and color[1]=238 and color[2]=144) or (color[0]=152 and color[1]=251 and color[2]=152) or (color[0]=143 and color[1]=188 and color[2]=143) or (color[0]=60 and color[1]=179 and color[2]=113) or (color[0]=32 and color[1]=178 and color[2]=170) or (color[0]=46 and color[1]=139 and color[2]=87) or (color[0]=128 and color[1]=128 and color[2]=0) or (color[0]=85 and color[1]=107 and color[2]=47) or (color[0]=85 and color[1]=107 and color[2]=47) or (color[0]=107 and color[1]=142 and color[2]=35):
