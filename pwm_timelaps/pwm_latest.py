@@ -1,7 +1,6 @@
 import RPi.GPIO as GPIO
 import time 
 from picamera import PiCamera
-
 # If using multiple cameras
 # from timelaps_new import *
 
