@@ -61,7 +61,7 @@ def collect_data():
 		# crop pointcloud to zoom in on area of interest (eg balloon)
 		shape = o3d.geometry.PointCloud()
 		shape.points = o3d.utility.Vector3dVector(points)
-		shape = shape.crop(o3d.geometry.AxisAlignedBoundingBox(np.array([-500, -500, -500]),
+		shape = shape.crop(o3d.geometry.AxisAlignedBoundingBox(np.array([-500, -500, 1]),
 															   np.array([50, 100, 500])))
 
 		# save cropped pointcloud for each capture
