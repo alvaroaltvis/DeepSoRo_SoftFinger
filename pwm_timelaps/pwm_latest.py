@@ -18,8 +18,7 @@ pwmo = GPIO.PWM(13,100)
 pwm.start(0)
 pwmo.start(0)
 
-#Set up for the camera
-
+#Set up for the camera ## Raspi
 camera = PiCamera()
 camera.resolution = (1024, 768)
 camera.vflip = True
@@ -40,7 +39,7 @@ def inflate(name):
         capture(name)
         pwm.ChangeDutyCycle(0)
 
-## If two cameras were to be used 
+# If two pumps are used
 #def deflate():  
 #    max_time = 0.5
 #    start_time = time.time()
