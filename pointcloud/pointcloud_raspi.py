@@ -115,6 +115,7 @@ class KINECT():
                                         subordinate_delay_off_master_usec=0)
     
     def capture_colorPCD(self, device_index):
+        print('Capturing ...')
         while True:
             # perform capture
             capture = self.device[device_index].update()
@@ -188,14 +189,16 @@ class KINECT():
 
         # while True:
         for i in range(1):
+            power = input("Enter the power value; 0 to exit and 100 max: ")
+            name = input("Enter the name of the image: ")
             # Code to connect to raspi and power the actuation mechanism
-            subprocess.run(["ssh","raspberrypi@192.168.1.2","python3 /home/raspberrypi/Desktop/New_code/pwm_one.py --name remotecontrol --power 40"], capture_output=True)
+            subprocess.run(["ssh","raspberrypi@192.168.1.2",f"python3 /home/raspberrypi/Desktop/New_code/pwm_oneP.py --name {name} --power {power}"])#, capture_output=True)
             # capture using the left camera
             pt_left, img_left = self.capture_colorPCD(device_index=0)
             # capture using the right camera
             pt_right, img_right = self.capture_colorPCD(device_index=1)
-            # Code to connect to raspi and powerdown the finger 
-            subprocess.run(["ssh","raspberrypi@192.168.1.2","python3 /home/raspberrypi/Desktop/New_code/pwm_one.py --power 0"], capture_output=True)
+            # Code to connect to raspi and powerdown the finger
+            subprocess.run(["ssh","raspberrypi@192.168.1.2","python3 /home/raspberrypi/Desktop/New_code/pwm_oneP.py --power 0"], capture_output=True)
 
             print(f'LEFT  PCD: {np.shape(pt_left)}, LEFT  IMG: {np.shape(img_left)}')
             print(f'RIGHT PCD: {np.shape(pt_right)}, RIGHT IMG: {np.shape(img_right)}')
@@ -251,7 +254,7 @@ class KINECT():
 															   np.array([80, 200, 500])))
             self.draw_registration_result(left_down, right_down, reg_p2p.transformation)
             self.draw_registration_result(pcd_left_crop, pcd_right_crop, reg_p2p.transformation)
-            open3dVisualizer_left(pcd_left.points, img_left)
+            # open3dVisualizer_left(pcd_left.points, img_left)
 
 
             
