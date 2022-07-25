@@ -193,6 +193,7 @@ class KINECT():
             name = input("Enter the name of the image: ")
             # Code to connect to raspi and power the actuation mechanism
             subprocess.Popen(["ssh","raspberrypi@192.168.1.2",f"python3 /home/raspberrypi/Desktop/New_code/pwm_twoC.py --name {name} --power {power}"])#, capture_output=True)
+            time.sleep(2)
             # capture using the left camera
             pt_left, img_left = self.capture_colorPCD(device_index=0)
             # capture using the right camera
@@ -200,7 +201,6 @@ class KINECT():
             # Code to connect to raspi and powerdown the finger
             subprocess.run(["ssh","raspberrypi@192.168.1.2","sudo kill -9 $(pidof python3)"], capture_output=True)
             subprocess.run(["ssh","raspberrypi@192.168.1.2","python3 /home/raspberrypi/Desktop/New_code/pwm_twoC.py --power 0"], capture_output=True)
-            subprocess.run(["ssh","raspberrypi@192.168.1.2","sudo kill -9 $(pidof python3)"], capture_output=True)
 
             print(f'LEFT  PCD: {np.shape(pt_left)}, LEFT  IMG: {np.shape(img_left)}')
             print(f'RIGHT PCD: {np.shape(pt_right)}, RIGHT IMG: {np.shape(img_right)}')
