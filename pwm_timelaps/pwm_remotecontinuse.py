@@ -42,17 +42,11 @@ def capture(name):
 
 # The else statement keeps repeating, I used quit but I want to use a more elegant solution
 def inflate(name):
+    GPIO.output(6, 0)
+    pwm.ChangeDutyCycle(power)
     if power == 0:
-       GPIO.output(6, 1)
-    else:
-        max_time = 1
-        start_time = time.time()
-        while time.time() < max_time + start_time:
-            GPIO.output(6, 0)
-            pwm.ChangeDutyCycle(power)
-        else:
-            capture(name)
-            pwm.stop()
+        GPIO.output(6, 1)
+        pwm.ChangeDutyCycle(power)
 
 inflate(name)
 
