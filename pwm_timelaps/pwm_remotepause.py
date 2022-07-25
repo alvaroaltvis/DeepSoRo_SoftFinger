@@ -42,33 +42,19 @@ def capture(name):
 
 # The else statement keeps repeating, I used quit but I want to use a more elegant solution
 def inflate(name):
-    max_time = 1
-    start_time = time.time()
-    while time.time() < max_time + start_time:
-        GPIO.output(6, 0)
-        pwm.ChangeDutyCycle(power)
+    if power == 0:
+       GPIO.output(6, 1)
     else:
-        capture(name)
-        pwm.stop()
-        GPIO.output(6, 1)
-        quit()
+        max_time = 1
+        start_time = time.time()
+        while time.time() < max_time + start_time:
+            GPIO.output(6, 0)
+            pwm.ChangeDutyCycle(power)
+        else:
+            capture(name)
+            pwm.stop()
 
-## If two cameras were to be used 
-#def deflate():  
-#    max_time = 0.5
-#    start_time = time.time()
-#    while time.time() < max_time + start_time:
-#        pwmo.ChangeDutyCycle(int(dutycycle))
-#    else: 
-#        pwmo.ChangeDutyCycle(0)
-        
-stopit = False
-while(stopit!= True):
-    if power == 1:
-        stopit = True
-        break
-    inflate(name)
-    #deflate()
-   
-GPIO.cleanup()
+inflate(name)
+
+#GPIO.cleanup()
 print("Finish")
