@@ -1,16 +1,22 @@
 import os, sys
+from os import getcwd, path
 import cv2
 import numpy as np
 import open3d as o3d
 import copy
 import time
 import subprocess
+from random import seed
+from random import randint
 
 # import pyKinectAzure library from folder
 sys.path.insert(1, './pyKinectAzure')
 import pykinect_azure as pykinect
 from pykinect_azure.utils import Open3dVisualizer
 
+# Folder to store point Cloud 
+cwd = getcwd()
+point_cloud = path.join(cwd, 'PointCloud')
 
 class KINECT():
 
@@ -146,6 +152,15 @@ class KINECT():
                                         front=[0.6452, -0.3036, -0.7011],
                                         lookat=[1.9892, 2.0208, 1.8945],
                                         up=[-0.2779, -0.9482, 0.1556])
+        
+    # def save_pointcloud(self, source, target, transformation):
+    #     source_temp = copy.deepcopy(source)
+    #     target_temp = copy.deepcopy(target)
+    #     source_temp.paint_uniform_color([1, 0.706, 0])
+    #     target_temp.paint_uniform_color([0, 0.651, 0.929])
+    #     source_temp.transform(transformation)
+    #     filename = path.join(point_cloud, f'pcdR.ply')
+    #     o3d.io.write_point_cloud(filename, [source_temp, target_temp], write_ascii=False, compressed=False, print_progress=False)
 
     def preprocess_point_cloud(self, pcd, voxel_size):
         print(":: Downsample with a voxel size %.3f." % voxel_size)
@@ -175,24 +190,20 @@ class KINECT():
             maximum_correspondence_distance=distance_threshold))
         return result
 
-
-
     def sync_capture(self):
-
         # configure the sync cameras
         self.sync_capture_config()
+
         # show number of device
         print(self.device)
-
         #open3dVisualizer_left = Open3dVisualizer()
         #open3dVisualizer_right = Open3dVisualizer()
-
+        name = input("Name of the training badge: ")
         # while True:
-        for i in range(1):
-            power = input("Enter the power value; 0 to exit and 100 max: ")
-            name = input("Enter the name of the image: ")
+        for i in range(100):
+            power = randint(0,80)
             # Code to connect to raspi and power the actuation mechanism
-            subprocess.run(["ssh","raspberrypi@192.168.1.2",f"python3 /home/raspberrypi/Desktop/New_code/pwm_oneP.py --name {name} --power {power}"])#, capture_output=True)
+            subprocess.run(["ssh","raspberrypi@192.168.1.2",f"python3 /home/raspberrypi/Desktop/New_code/pwm_oneP.py --name {name}{power}{i} --power {power}"])#, capture_output=True)
             # capture using the left camera
             pt_left, img_left = self.capture_colorPCD(device_index=0)
             # capture using the right camera
@@ -218,7 +229,7 @@ class KINECT():
 
             # self.draw_registration_result(pcd_left, pcd_right, np.identity(4))
 
-            voxel_size = 10
+            voxel_size = 9
             left_down, left_fpfh = self.preprocess_point_cloud(pcd_left, voxel_size)
             right_down, right_fpfh = self.preprocess_point_cloud(pcd_right, voxel_size)
 
@@ -233,7 +244,7 @@ class KINECT():
             print("Fast global registration took %.3f sec.\n" % (time.time() - start))
             print(result_fast)
             print(result_fast.transformation)
-            self.draw_registration_result(left_down, right_down, result_fast.transformation)
+            #self.draw_registration_result(left_down, right_down, result_fast.transformation)
 
 
             # ICP
@@ -244,7 +255,7 @@ class KINECT():
             reg_p2p = o3d.pipelines.registration.registration_icp(
                 left_down, right_down, threshold, trans_init,
                 o3d.pipelines.registration.TransformationEstimationPointToPoint(),
-                o3d.pipelines.registration.ICPConvergenceCriteria(max_iteration=5000))
+                o3d.pipelines.registration.ICPConvergenceCriteria(max_iteration=3000))
             print("ICP registration took %.3f sec.\n" % (time.time() - start))
             print(reg_p2p)
             print(f"Transformation is:\n {reg_p2p.transformation}")
@@ -252,24 +263,16 @@ class KINECT():
 															   np.array([0, 200, 320])))
             pcd_right_crop = pcd_right.crop(o3d.geometry.AxisAlignedBoundingBox(np.array([0, -400, 1]),
 															   np.array([80, 200, 500])))
-            self.draw_registration_result(left_down, right_down, reg_p2p.transformation)
-            self.draw_registration_result(pcd_left_crop, pcd_right_crop, reg_p2p.transformation)
-	    pcd_combined = o3d.geometry.PointCloud()
-            pcd_combined.points = o3d.utility.Vector3dVector([*pcd_left_crop.points, *pcd_right_crop.points])
-            # open3dVisualizer_left(pcd_left.points, img_left)
-	    np.savez(f'./data_{somename}.npz', pcd=pcd_combined.points, transformation=reg_p2p.transformation, img_l=img_left)
-	    # Combine pointclouds 
+            #self.draw_registration_result(left_down, right_down, reg_p2p.transformation)
+            #self.draw_registration_result(pcd_left_crop, pcd_right_crop, reg_p2p.transformation)
+            # Combine pointclouds 
             pcd_combined = o3d.geometry.PointCloud()
             pcd_combined.points = o3d.utility.Vector3dVector([*pcd_left_crop.points, *pcd_right_crop.points])
-            np.savez(f'./PointCloud/data_{i}.npz', pcd=pcd_combined.points, transformation=reg_p2p.transformation, img_l=img_left)
+            np.savez(f'./PointCloud/data_{power}{i}.npz', pcd=pcd_combined.points, transformation=reg_p2p.transformation, img_l=img_left)
 
-
-            
-
-
-
-    
-
+            #self.save_pointcloud(pcd_left_crop, pcd_right_crop, reg_p2p.transformation)
+            #open3dVisualizer_left(pcd_left.points, img_left)
+        
 if __name__ == "__main__":
 
     # change working directory
