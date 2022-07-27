@@ -254,7 +254,10 @@ class KINECT():
 															   np.array([80, 200, 500])))
             self.draw_registration_result(left_down, right_down, reg_p2p.transformation)
             self.draw_registration_result(pcd_left_crop, pcd_right_crop, reg_p2p.transformation)
+	    pcd_combined = o3d.geometry.PointCloud()
+            pcd_combined.points = o3d.utility.Vector3dVector([*pcd_left_crop.points, *pcd_right_crop.points])
             # open3dVisualizer_left(pcd_left.points, img_left)
+	    np.savez(f'./data_{somename}.npz', pcd=pcd_combined.points, transformation=reg_p2p.transformation, img_l=img_left)
 
 
             
