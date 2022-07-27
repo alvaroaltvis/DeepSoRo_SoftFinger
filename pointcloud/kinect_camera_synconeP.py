@@ -258,6 +258,10 @@ class KINECT():
             pcd_combined.points = o3d.utility.Vector3dVector([*pcd_left_crop.points, *pcd_right_crop.points])
             # open3dVisualizer_left(pcd_left.points, img_left)
 	    np.savez(f'./data_{somename}.npz', pcd=pcd_combined.points, transformation=reg_p2p.transformation, img_l=img_left)
+	    # Combine pointclouds 
+            pcd_combined = o3d.geometry.PointCloud()
+            pcd_combined.points = o3d.utility.Vector3dVector([*pcd_left_crop.points, *pcd_right_crop.points])
+            np.savez(f'./PointCloud/data_{i}.npz', pcd=pcd_combined.points, transformation=reg_p2p.transformation, img_l=img_left)
 
 
             
