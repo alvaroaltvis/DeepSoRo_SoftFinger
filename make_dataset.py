@@ -9,9 +9,7 @@ from tqdm.contrib.concurrent import process_map
 import open3d as o3d
 from random import seed
 from random import randint
-from random import choices
-
-print(dir(o3d))
+from numpy.random import default_rng
 
 DEBUG = False
 
@@ -80,17 +78,16 @@ class MAKE_DATASET():
         data = np.load(filename)
         # get vertices from mesh
         vertices = data['pcd']
-        #print(len(vertices)) #-- Min point cloud is 6216 points 
-        # if len(vertices) > 6216:
-        extra_points=len(vertices) - 6216
-        ran = range(0, len(vertices))
-        eliminate=choices(ran, k=extra_points)
-        vertices = np.delete(vertices, eliminate, 0)
-        print(len(vertices))
-        #return vertices
 
-    
-    #def resize all the pointclouds that are not the minimum size. 
+        # Downsize pointcloud
+        #print(len(vertices)) #-- See what the min points in a pointcloud is. This case: 6216 points 
+        rng = default_rng()
+        extra_points=len(vertices) - 6216
+        ran = range(0, len(vertices)-1)
+        eliminate=rng.choice(ran, size=extra_points, replace=False)
+        vertices = np.delete(vertices, eliminate, 0)
+        #print(len(vertices))
+        return vertices
     
 def parallel_worker(sim_folder):
     # print('\n'+sim_folder)
@@ -101,7 +98,7 @@ if __name__ == '__main__':
     
     os.chdir(sys.path[0])
     
-    DATA_PATH = '/home/nuc/Desktop/kinect_camera/DATA/'
+    DATA_PATH = '/home/nuc/Desktop/kinect_camera/DATA'
     
     SIM_FOLDERS = []
     for dir in os.listdir(DATA_PATH):
@@ -109,9 +106,3 @@ if __name__ == '__main__':
 
     process_map(parallel_worker, SIM_FOLDERS, max_workers=24)
     
-#   extra_points=len(vertices) - 6216
-#         random = []
-#         for i in range(extra_points):
-#             random.append(randint(0, len(vertices)-1))
-#         vertices = np.delete(vertices, random, 0)
-#         print(len(vertices)) 
