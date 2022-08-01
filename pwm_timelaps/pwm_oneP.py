@@ -2,6 +2,7 @@ import RPi.GPIO as GPIO
 import time 
 from picamera import PiCamera
 import argparse
+import os
 
 # If using multiple cameras
 # from timelaps_new import *
@@ -29,16 +30,20 @@ camera.vflip = True
 parser = argparse.ArgumentParser(description= "Input the name and the power of the air pump")
 parser.add_argument("--name", default="image", type=str, required=False, help="The name of the image")
 parser.add_argument("--power", default=10, type= int, required=True, help="Enter the percentage of Duty Cycle, 100 max value, 1 to quit: ")
+parser.add_argument("--folder", default="image", type=str, required=True, help="Name of the folder where the images will be stored")
 
 #Use parameters
 args = parser.parse_args()
 name = args.name
-power = args.power 
+power = args.power
+folder_name = args.folder
+# Preview Camera
+camera.start_preview()
 
 # Take embeded image
 def capture(name):
-    for i in range(2):
-        camera.capture("/home/raspberrypi/Desktop/EmbededImages/" + name + f"camera{i}.jpg")
+    for i in range(1):
+        camera.capture(f"/home/raspberrypi/Desktop/EmbededImages/{folder_name}/" + name + f".jpg")
 
 # The else statement keeps repeating, I used quit but I want to use a more elegant solution
 def inflate(name):
