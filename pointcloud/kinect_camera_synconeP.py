@@ -6,6 +6,7 @@ import open3d as o3d
 import copy
 import time
 import subprocess
+import shutil
 from random import seed
 from random import randint
 
@@ -198,12 +199,32 @@ class KINECT():
         print(self.device)
         #open3dVisualizer_left = Open3dVisualizer()
         #open3dVisualizer_right = Open3dVisualizer()
-        name = input("Name of the training badge: ")
+        folder_name = input("Create a folder and name it for the new test DATA_#: ")
+        repetition = input("Number of repetitions: ")
+
+        # Create the new folder for the point clouds
+        parent_directory= "/home/nuc/Desktop/kinect_camera/DATA"
+        path= os.path.join(parent_directory, folder_name)
+        os.mkdir(path)
+
+        # Create the PointCloud folder inside
+        parent_directory= f"/home/nuc/Desktop/kinect_camera/DATA/{folder_name}"
+        path= os.path.join(parent_directory, "PointCloud")
+        os.mkdir(path)
+
+        # Create a folder for the raspi pictures to be imported into 
+        parent_directory= f"/home/nuc/Desktop/kinect_camera/DATA/{folder_name}"
+        path= os.path.join(parent_directory, "Images")
+        os.mkdir(path)
+
+        # RUn the createion fordel script for the raspi
+        subprocess.run(["ssh","raspberrypi@192.168.1.2",f"python3 /home/raspberrypi/Desktop/New_code/create_folder.py --folder {folder_name}"])
+
         # while True:
-        for i in range(100):
-            power = randint(0,80)
+        for i in range(int(repetition)):
+            power = randint(15,80)
             # Code to connect to raspi and power the actuation mechanism
-            subprocess.run(["ssh","raspberrypi@192.168.1.2",f"python3 /home/raspberrypi/Desktop/New_code/pwm_oneP.py --name {name}{power}{i} --power {power}"])#, capture_output=True)
+            subprocess.run(["ssh","raspberrypi@192.168.1.2",f"python3 /home/raspberrypi/Desktop/New_code/pwm_oneP.py --name {i} --power {power} --folder {folder_name}"])
             # capture using the left camera
             pt_left, img_left = self.capture_colorPCD(device_index=0)
             # capture using the right camera
@@ -227,6 +248,13 @@ class KINECT():
             pcd_right = o3d.geometry.PointCloud()
             pcd_right.points = o3d.utility.Vector3dVector(pt_right)
 
+            # Crop and calibrate to a box instead of the entire picture 
+            # new_pcd_right = pcd_right.crop(o3d.geometry.AxisAlignedBoundingBox(np.array([-50, 70, 1]), 
+            #                                                     np.array([100, 250, 400])))     # Right hand side 
+
+            # new_pcd_left = pcd_left.crop(o3d.geometry.AxisAlignedBoundingBox(np.array([-500, 70, 1]),
+            # 													   np.array([500, 250, 300]))) # Left hand side 
+
             # self.draw_registration_result(pcd_left, pcd_right, np.identity(4))
 
             voxel_size = 9
@@ -234,7 +262,7 @@ class KINECT():
             right_down, right_fpfh = self.preprocess_point_cloud(pcd_right, voxel_size)
 
             print(f'Downsampled PCD: {np.shape(left_down.points)}')
-
+            
             # fast global registration
             start = time.time()
             result_fast = self.execute_fast_global_registration(left_down, right_down,
@@ -260,31 +288,40 @@ class KINECT():
             print(reg_p2p)
             print(f"Transformation is:\n {reg_p2p.transformation}")
             pcd_left_crop = pcd_left.crop(o3d.geometry.AxisAlignedBoundingBox(np.array([-200, -400, 1]),
-															   np.array([0, 200, 320])))
+															   np.array([0, 150, 320])))
             pcd_right_crop = pcd_right.crop(o3d.geometry.AxisAlignedBoundingBox(np.array([0, -400, 1]),
-															   np.array([80, 200, 500])))
+															   np.array([80, 150, 500])))
             #self.draw_registration_result(left_down, right_down, reg_p2p.transformation)
-            #self.draw_registration_result(pcd_left_crop, pcd_right_crop, reg_p2p.transformation)
+            self.draw_registration_result(pcd_left_crop, pcd_right_crop, reg_p2p.transformation)
             # Combine pointclouds 
             pcd_combined = o3d.geometry.PointCloud()
             pcd_combined.points = o3d.utility.Vector3dVector([*pcd_left_crop.points, *pcd_right_crop.points])
-            np.savez(f'./PointCloud/data_{power}{i}.npz', pcd=pcd_combined.points, transformation=reg_p2p.transformation, img_l=img_left)
+            np.savez(f'./DATA/{folder_name}/PointCloud/data_{i}.npz', pcd=pcd_combined.points, transformation=reg_p2p.transformation, img_l=img_left)
 
-            #self.save_pointcloud(pcd_left_crop, pcd_right_crop, reg_p2p.transformation)
-            #open3dVisualizer_left(pcd_left.points, img_left)
+def maybeMkDir(path):
+    if os.path.exists(path):
+        overwrite = input("The folder path exists, do you want to overrite it? 1:Yes, 0:No")
+        if overwrite == '1':
+            shutil.rmtree(path)
+            os.mkdir(path)
+        else:
+            return
+    else:
+        os.mkdir(path)
         
+
+
 if __name__ == "__main__":
 
     # change working directory
     os.chdir(sys.path[0])
 
-    # class instance
+    # # class instance
     kinect = KINECT()
-    # kinect.show_colorImage()
-    # kinect.show_depthImage()
-    # kinect.show_pointCloud()
-    # kinect.show_colorPointCloud()
-    # kinect.show_depth2Color()
-    # kinect.show_color2Depth()
+    # # kinect.show_colorImage()
+    # # kinect.show_depthImage()
+    # # kinect.show_pointCloud()
+    # # kinect.show_colorPointCloud()
+    # # kinect.show_depth2Color()
+    # # kinect.show_color2Depth()
     kinect.sync_capture()
-    
