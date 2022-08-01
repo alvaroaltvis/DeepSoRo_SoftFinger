@@ -8,6 +8,7 @@ Soft robotics is a subfield in robotics that specializes in the building and con
 
 The primary objective of this research project is to develop a soft robot finger that enables 3D shape reconstruction and force estimation using vision-based proprioception and deep learning models. The ultimate goal is to employ soft finger grippers to pick, handle, and sense fragile objects that would be challenging for conventional rigid grippers. The soft finger was designed with a constraint layer that permits the soft finger to extend along a particular curve when powered by pneumatic actuation. In addition, a data-gathering system was designed to collect training data for neural network models. The system consists of an RGB camera that captures the interior image of the soft finger, which contains bumps in a specific pattern, and two RGBD cameras that collect the external shape/geometry information of the soft finger. The deformation of the embedded bumps combined with the data from the RGBD camera will allow the convolution neural network to assimilate internal deformations with specific 3D shapes and angles. This correlation will allow the neural network to estimate the 3D shape and angle of the soft finger under arbitrary deformations based solely on the embedded images.
 
+This research project is a collaborative effort with AI4CE lab at NYU Tandon School of Engineering. 
 
 ## How to use repository 
 
@@ -22,3 +23,7 @@ The code needed to take two pointcloud from different Azure SDK Cameras and comb
 ### PWM and TimeLaps 
 
 This folder contains the code to send one or two PWM signals from a raspi to power the pneumatic pump that powers the soft finger. It also includes the commands to take an image during the inflation process with the raspi camera. The description of each of them can be found in the Read.me in the folder. 
+
+### Make Data 
+
+The make Data set script combines the embedded images with their respective pointcloud, so that they can be later processed by the machine learning alogithm from DeepSoRo. 
