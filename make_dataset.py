@@ -1,10 +1,8 @@
 import os, sys
 import numpy as np
-# import pymesh
 import cv2
 import multiprocessing as mp
 from scipy.spatial.transform import Rotation as R
-# from data_utils import *
 from tqdm.contrib.concurrent import process_map
 import open3d as o3d
 from random import seed
@@ -33,14 +31,7 @@ class MAKE_DATASET():
 
         # load image and point cloud sequence files
         image_seq, pcd_seq = self.load_files()
-
-        # image_seq = np.expand_dims(image_seq, axis=0)
-        # pcd_seq = np.expand_dims(pcd_b_seq, axis=0)
-        # com_coordinate_seq = np.expand_dims(com_coordinate_seq, axis=0)
-        # rotated_com_translation_seq = np.expand_dims(rotated_com_translation_seq, axis=0)
-        # com_rotation_seq = np.expand_dims(com_rotation_seq, axis=0)
-        # idx_seq = np.expand_dims(idx_seq, axis=0)       
-
+      
         print(f'IMG Dim: {np.shape(image_seq)}')
         print(f'PCD Dim: {np.shape(pcd_seq)}')
         # print(f'IDX Dim: {np.shape(idx_seq)}')
@@ -90,10 +81,6 @@ class MAKE_DATASET():
         #print(len(vertices))
         return vertices
     
-# def parallel_worker(sim_folder):
-#     MAKE_DATASET(sim_folder)
-
-    
 if __name__ == '__main__':
     
     os.chdir(sys.path[0])
@@ -113,10 +100,6 @@ if __name__ == '__main__':
     
     # Choose the folder from where the data if coming from 
     DATA_PATH = f"/home/nuc/Desktop/kinect_camera/DATA/{wanted_data}" #Specify the folder I want 
-    
-    # SIM_FOLDERS = []
-    # for dir in os.listdir(DATA_PATH):
-    #     SIM_FOLDERS.append(os.path.abspath(os.path.join(DATA_PATH, dir)))
 
     # process_map(parallel_worker, SIM_FOLDERS, max_workers=24)
     combine_data = MAKE_DATASET()
