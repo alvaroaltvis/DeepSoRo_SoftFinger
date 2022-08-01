@@ -10,6 +10,7 @@ import open3d as o3d
 from random import seed
 from random import randint
 from numpy.random import default_rng
+import subprocess
 
 DEBUG = False
 
@@ -107,8 +108,8 @@ if __name__ == '__main__':
     os.mkdir(path)
 
     # Download the remote data from raspi
-    # for i in range(10):  # Adjust number to number of samples 
-    #     subprocess.run(["scp", f"raspberrypi@192.168.1.2:/home/raspberrypi/Desktop/EmbededImages/{wanted_data}/{i}.jpg", f"/home/nuc/Desktop/kinect_camera/DATA/{wanted_data}/Images"])
+    for i in range(10):  # Adjust number to number of samples 
+        subprocess.run(["scp", f"raspberrypi@192.168.1.2:/home/raspberrypi/Desktop/EmbededImages/{wanted_data}/{i}.jpg", f"/home/nuc/Desktop/kinect_camera/DATA/{wanted_data}/Images"])
     
     # Choose the folder from where the data if coming from 
     DATA_PATH = f"/home/nuc/Desktop/kinect_camera/DATA/{wanted_data}" #Specify the folder I want 
