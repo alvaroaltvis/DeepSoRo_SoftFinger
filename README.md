@@ -26,4 +26,4 @@ This folder contains the code to send one or two PWM signals from a raspi to pow
 
 ### Make Data 
 
-The make Data set script combines the embedded images with their respective pointcloud, so that they can be later processed by the machine learning alogithm from DeepSoRo. 
+The make_dataset script combines the embedded images with their respective pointcloud, so that they can be later processed by the machine learning alogithm from DeepSoRo. 
