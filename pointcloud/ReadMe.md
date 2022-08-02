@@ -15,6 +15,10 @@ Kinect_Camera_synconeP follows a similar process from combined_pointcloud, it al
 
 Kinect_Camera_synctwoC follows almost the same process as Kinect_Camera_synconeP, with the calibrated pointcloud and the information to the raspberry pi, nonetheless this script doesn't end the first signal of power of the raspberry pi until after the pointcloud images are taken. This allows for more reliable results if there is to be an air leakage in the soft body. 
 
+#### pointcloudOneP_fixed 
+
+PointcloudOneP_fixed follows almost the same process as Kinect_Camera_synconeP, nonetheless, instead of calibrating the two pointcloud with a new transformation matrix each time, the best transformation matrix for the experiment was hardcoded and used to combine all the future pointclouds, generating more accurate results, but with a very specific experimental setup. 
+
 ### Rest of scripts 
 
 PointcloudGreenScreen filters all the green points from the pointcloud, in case of using a green screen. Although the RGB parameters still need adjustment. 
