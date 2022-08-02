@@ -49,12 +49,12 @@ def capture(name):
 # The else statement keeps repeating, I used quit but I want to use a more elegant solution
 def inflate(name):
     while power != 0:
-        GPIO.output(6, 0)
+        GPIO.output(6, 0) # Close Valvue
         pwm.ChangeDutyCycle(power)
         capture(name)
         print("hello")
     else:
-        GPIO.output(6, 1)
+        GPIO.output(6, 1) # Open Valvue
         pwm.stop()
     
 
