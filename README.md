@@ -14,15 +14,15 @@ This research project is a collaborative effort with AI4CE lab at NYU Tandon Sch
 
 ### CAD Files 
  
-The STL files can be found under CAD_Soft_Robot, for the exception of the Exoskeleton file as it's too large to be in an STL format. The materials used to build them are described in the Read.me under CAD files. 
+The STL files can be found under CAD_Soft_Robot, for the exception of the Exoskeleton file as it's too large to be in an STL format. The materials used to build them are described in the Readme under CAD files. 
 
 ### PointCloud 
 
-The code needed to take two pointclouds from different Azure SDK Cameras and combine them into one same cloud can be found under pointclouds. The description of each of them can be found in the Read.me folder. 
+The code needed to take two pointclouds from different Azure SDK Cameras and combine them into one same cloud can be found under pointclouds. The description of each of them can be found in the Readme folder. 
 
 ### PWM and TimeLaps 
 
-This folder contains the code to send one or two PWM signals from a raspberry pi to power the pneumatic pump that powers the soft finger. It also includes the commands to take an image during the inflation process with the raspberry pi fish eye camera. The description of each of them can be found in the Read.me folder. 
+This folder contains the code to send one or two PWM signals from a raspberry pi to power the pneumatic pump that powers the soft finger. It also includes the commands to take an image during the inflation process with the raspberry pi fish eye camera. The description of each of them can be found in the Readme folder. 
 
 ### Make Data 
 
