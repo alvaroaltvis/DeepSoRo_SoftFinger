@@ -22,7 +22,7 @@ The code needed to take two pointclouds from different Azure SDK Cameras and com
 
 ### PWM and TimeLaps 
 
-This folder contains the code to send one or two PWM signals from a raspberry pi to power the pneumatic pump that powers the soft finger. It also includes the commands to take an image during the inflation process with the raspberry pi fish eye camera. The description of each of them can be found in the Readme folder. 
+This folder contains the code to send one or two PWM signals from a raspberry pi to power the pneumatic pump at different percentages, and therefore achive a controlled inflation and deflation with different deformations. It also includes the commands to take an image during the inflation process with the raspberry pi fish eye camera. The description of each of them can be found in the Readme folder. 
 
 ### Make Data 
 
