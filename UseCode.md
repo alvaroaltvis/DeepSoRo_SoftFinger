@@ -5,7 +5,7 @@ This file describes how to use the code writen above step by step for the specif
 If the experiemntal setup is used as it is in the AI4CE lab, the raspberrypi already contains the scripts needed. If not, please use the pwm_OneP.py script to activate the pump, take an embedded image and open the valvue to deflate.
 
 ### Collect Embedded images and pointclouds 
-First run crop_pointcloud.py, to make sure the object is well represented in the pointcloud and that there isn't extra or less points than needed. You need to connect only one camera when running tests. You can edit this by changing the dimentions of shape.crop. This generates a rectangle that eliminates everything around it. 
+First run crop_pointcloud.py, to make sure the object is well represented in the pointcloud and that there isn't extra or less points than needed. You need to connect only one camera when running tests. You can edit this by changing the dimentions of shape.crop. The dimmentions are in mm and they represent the two opporiste vertices of a rectangle. First is right/left, then up/down and then backa dn forward. This generates a rectangle that eliminates everything around it. 
 
 For the first step, use kinect_camera_synconeP.py to choose the best transformation matrix for the pointcloud combination. It will take an embedded image and pointcloud. When the code runs, it will ask you for two inputs. Place the name of the folder and the number of repetitions you need. 
 You can uncomment self.draw_registration_result to see how well the pointclouds got comgined. Store the transformation matrix for the best pointclouds. 
