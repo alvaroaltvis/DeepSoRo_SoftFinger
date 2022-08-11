@@ -8,8 +8,9 @@ The base and the caps are printed with Flexible 80 from Formlabs 3D printers
 The exoskeleton is made with Grey Pro and Tough 1500 from the Formlabs 3D printers. The Grey Pro provides more elasticity, while the Tough provides durability. 
 
 # Making soft Finger
+
 When putting together the inner and outer mold, make sure the inner mold fits right into the DFA feature inside the hole of the outer mold. There is a small bump that makes placing the inner mold easy. 
 
 Use ecoFlex 0030. Mix the two bases on a 1:1 ratio. Use the vacuum two absorb all the air bubbles inside the ecoflex, do this process twice. Once it is done, set the mold, tightly screwed together, on a flat surface, and pour the ecoflex slowly and uniformly on top of the mold. You can use mold release spray if wanted but it leaves a sticky surface on the finger that is hard to later wash off. To remove, carefully pill separate the ecoFlex from the walls of the mold. Then by holding the mold down, pull the inside section slowly but repeatedly, it will start to get loose and after a few minutes, you will be able to remove it.  
 
-### Note: you can sand down the connections of the mold before using, to have a few mm gap and make sure the seal isn't too tight to later remove. Nonetheless, if overdone, this may provoke some leakage. 
+Note: You can sand down the connections of the mold before using. Nonetheless, if overdone, this may provoke some leakage. 
