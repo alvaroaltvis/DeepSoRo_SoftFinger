@@ -26,9 +26,6 @@ device_config.depth_mode = pykinect.K4A_DEPTH_MODE_NFOV_2X2BINNED
 
 # Start kinect
 device = pykinect.start_device(config=device_config)
-# start internal camera and video writer
-internal_cam = cv2.VideoCapture(2, cv2.CAP_DSHOW)
-vid_writer = imageio.get_writer(path.join(cwd, 'internal_vid.mp4'), fps=20)
 
 # Initialize the Open3d visualizer
 open3dVisualizer = Open3dVisualizer()
@@ -39,11 +36,6 @@ def collect_data():
 	for cap in range(num_captures):
 		# Get kinect capture
 		capture = device.update()
-		# get internal camera capture and save image
-		#captured, img = internal_cam.read()
-		#img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-		#cv2.imwrite(path.join(images_folder, f'cam_img{cap}.png'), img)
-		#vid_writer.append_data(img)
 
 		# Get the color depth image from the capture
 		ret, depth_image = capture.get_colored_depth_image()
@@ -58,24 +50,22 @@ def collect_data():
 		open3dVisualizer(points)
 		cv2.imshow('Depth Image', depth_image)
 
-		# crop pointcloud to zoom in on area of interest (eg balloon)
+		# crop pointcloud to zoom in on area of interest
 		shape = o3d.geometry.PointCloud()
 		shape.points = o3d.utility.Vector3dVector(points)
-		shape = shape.crop(o3d.geometry.AxisAlignedBoundingBox(np.array([10, -50, 1]),
+		shape = shape.crop(o3d.geometry.AxisAlignedBoundingBox(np.array([10, -50, 1]),  # Left hand side Camera 
 															   np.array([80, 150, 500])))
 
-		# shape = shape.crop(o3d.geometry.AxisAlignedBoundingBox(np.array([-500, 70, 1]),
+		# shape = shape.crop(o3d.geometry.AxisAlignedBoundingBox(np.array([-500, 70, 1]),  # Right hand side camera 
 		# 													   np.array([500, 250, 300])))  
 
 		# save cropped pointcloud for each capture
 		filename = path.join(pcd_folder, f'pcdR{cap}.ply')
 		o3d.io.write_point_cloud(filename, shape, write_ascii=False, compressed=False, print_progress=False)
 		o3d.visualization.draw_geometries([shape])
-	# close internal camera video recorder
-	vid_writer.close()
 
 # Acces and save pointcloud 
-def create_pcd_video():
+def create_pcd():
 	for cap in range(num_captures):
 		# access pointcloud
 		filename = path.join(pcd_folder, f'pcdR{cap}.ply')
@@ -90,11 +80,7 @@ def create_pcd_video():
 		pcd_f = path.join(pcd_images_folder, f'imgR{cap}.png')
 		vis.capture_screen_image(pcd_f, do_render=True)
 		vis.destroy_window()
-		# write image to video
-		#pcd_vid_writer.append_data(imageio.imread(pcd_f))
-	# close video writer
-	#pcd_vid_writer.close()
 
 
 collect_data()
-create_pcd_video()
+create_pcd()
