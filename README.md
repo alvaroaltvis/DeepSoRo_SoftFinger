@@ -8,7 +8,7 @@ Soft robotics is a subfield in robotics that specializes in the building and con
 
 The primary objective of this research project is to develop a soft robot finger that enables 3D shape reconstruction and force estimation using vision-based proprioception and deep learning models. The ultimate goal is to employ soft finger grippers to pick, handle, and sense fragile objects that would be challenging for conventional rigid grippers. The soft finger was designed with a constraint layer that permits the soft finger to extend along a particular curve when powered by pneumatic actuation. In addition, a data-gathering system was designed to collect training data for neural network models. The system consists of an RGB camera that captures the interior image of the soft finger, which contains bumps in a specific pattern, and two RGBD cameras that collect the external shape/geometry information of the soft finger. The deformation of the embedded bumps combined with the data from the RGBD camera will allow the convolution neural network to assimilate internal deformations with specific 3D shapes and angles. This correlation will allow the neural network to estimate the 3D shape and angle of the soft finger under arbitrary deformations based solely on the embedded images.
 
-This research project is a collaborative effort with AI4CE lab at NYU Tandon School of Engineering, and the DeepSoRo project. Here is the link for their repository. 
+This research project is a collaborative effort with AI4CE lab at NYU Tandon School of Engineering and Carnegie Mellon University. Here is the link for the DeepSorRo repository, which is used as a base for the ML algorithms used:
 https://github.com/ai4ce/DeepSoRo 
 
 ## How to use repository 
