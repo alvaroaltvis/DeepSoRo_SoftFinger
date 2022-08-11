@@ -1,11 +1,12 @@
 # Molds
-The inside and outside molds are used to create the main body of the soft finger. The soft finger is made with ecoFlex 0030.
+The inside and outside molds are used to create the main body of the soft finger, they are created with Grey Pro from Formlabs3 3D printer. Use the recomended wash time and casting time. The soft finger is made with ecoFlex 0030. 
 
 # Base and Caps
-The base and the caps are printed with Flexible 80 from Formlabs 3D printers 
+The base and the caps are printed with Flexible 80 from Formlabs 3D printers. Use the recomended wash and cast techniques. 
 
 # Exoskeleton 
 The exoskeleton is made with Grey Pro and Tough 1500 from the Formlabs 3D printers. The Grey Pro provides more elasticity, while the Tough provides durability. 
+When printing the exoskeleton, make sure theat it is facing upwards, meaning that the flat top of the exoskeleton is in direct contact with the tray. Also make sure there aren't any inner supports as that will make it difficult to remove. Let in the bath for 15 minutes and then remove support. NEVER CAST, it makes it to fragile. 
 
 # Making soft Finger
 
