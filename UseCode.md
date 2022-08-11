@@ -2,7 +2,7 @@
 This file describes how to use the code writen above step by step for the specific experimental setup set at AI4CE Lab, nontheless it can be replicated if followed carefully. 
 
 ### RaspberryPi
-If the experiemntal setup is used as it is, the raspberrypi already contains the scripts needed. If not, please use the pwm_OneP.py script to activate the pump, take an embedded image and open the valvue to deflate.
+If the experiemntal setup is used as it is in the AI4Ce lab, the raspberrypi already contains the scripts needed. If not, please use the pwm_OneP.py script to activate the pump, take an embedded image and open the valvue to deflate.
 
 ### Collect Embedded images and pointclouds 
 For the first step, use kinect_camera_synconeP.py to choose the best transformation matrix for the pointcloud to combination. It will take an embedded image and pointcloud. When the code runs, it will ask you for two inputs. Place the name of the folder and the number of repetitions you need. 
