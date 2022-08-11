@@ -28,3 +28,6 @@ This folder contains the code to send one or two PWM signals from a raspberry pi
 ### Make Data 
 
 The make_dataset remotly access the embedded images taken with the raspberry pi and copies them to a specific folder in the local computer. Then the script combines the embedded images with their respective pointclouds, so that they can be later processed by the machine learning algorithm from DeepSoRo. 
+
+### UseRepository_Directly 
+Instructions are layed to use the repository without much need for change, just follow the instructions and it should be a quick setup and be ready to use.
