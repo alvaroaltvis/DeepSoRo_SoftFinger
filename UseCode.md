@@ -11,7 +11,7 @@ Once you have the transformation matrix that generates the best combined pointcl
 Run that code and place the number of repetitions you want your dataset to have and the name of the folder to store them. 
 
 ### Import embedded images from Raspi and Create DATASET 
-Run make_dataset.py, this script contains many things that need to be change, depending on the size of the data and name, therefore follow the comments on the script to make sure it works properly.
+make_dataset.py is the following step. This script contains many things that need to be changed, depending on the size of the data and name, therefore follow the comments on the script to make sure it works properly.
 It will ask you to input the name of the folder where the images are coming from (it is important its the same name you place in the last script).
 
 ### Upload the Dataset to the server and continue DeepSoRo_Plus process to create and train a model 
