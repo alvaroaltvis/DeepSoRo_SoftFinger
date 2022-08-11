@@ -23,7 +23,7 @@ PointcloudOneP_fixed follows almost the same process as Kinect_Camera_synconeP, 
 
 PointcloudGreenScreen filters all the green points from the pointcloud, in case of using a green screen. Although the RGB parameters still need adjustment. 
 Pointcloud_boxDepth filters all the points after a threshold. 
-pointcloud_boxLeft and pointcloud_boxRight filter pints with two vertices of a rectangle from different real-world camera positions. At around 45° angle from the front of the object. 
+View_pointcloud.py allows you to view a stored pointcloud to check if it is the desired outcome. Crop_pointcloud allows you to change and manipulate the FOV of the camera pointcloud. The script uses a rectangle that crops everypoint that is not inside. Therefore by moving the two cordinates that represent the opposite vertrices, you can make it bigger or smaller. The coordinates goes left/right, up/down, back/front.
 
 
 #### Note: All distance measurements are in mm 
